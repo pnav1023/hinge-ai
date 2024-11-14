@@ -7,6 +7,7 @@ import moviepy.editor as mp
 from time import sleep
 
 def add_audio_to_video(video_path, audio_path, output_path):
+    print("add_audio_to_video:", os.getcwd())
     # After video creation
     for _ in range(10):  # Retry up to 10 times with a short wait
         if os.path.exists(video_path):
@@ -23,6 +24,7 @@ def add_audio_to_video(video_path, audio_path, output_path):
 
 # Parameters
 def generate_video_from_images(image_folder, video_name="output_video.mp4", fps=1):
+    print("generate_video_from_images:", os.getcwd())
     # Load the first image to get dimensions
     first_image = cv2.imdecode(np.frombuffer(image_folder[0], np.uint8), cv2.IMREAD_COLOR)
     height, width, _ = first_image.shape
