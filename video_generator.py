@@ -11,20 +11,13 @@ def add_audio_to_video(video_path, audio_path, output_path):
     final_video.write_videofile(output_path, codec='libx264', audio_codec='aac')
 
 # Parameters
-def generate_video_from_images(image_folder, video_name='output_video.avi', fps=30):
-    # Parameters
-    video_name = 'output_video.mp4'       # Output video file name
-    fps = 1                              # Frames per second
-
-    # Get list of image files
-    images = [img for img in sorted(os.listdir(image_folder)) if img.endswith(".jpg") or img.endswith(".png") or img.endswith(".jpeg")]
-
+def generate_video_from_images(image_folder, video_name='output_video.mp4', fps=1):
     # Check if there are any images
-    if not images:
-        raise ValueError("No images found in the folder. Make sure the folder contains .jpg or .png files.")
+    # if not image_folder:
+    #     raise ValueError("No images found. Make sure to provide raw image data.")
 
     # Load the first image to get dimensions
-    first_image = cv2.imread(os.path.join(image_folder, images[0]))
+    first_image = cv2.imdecode(np.frombuffer(image_folder[0], np.uint8), cv2.IMREAD_COLOR)
     height, width, _ = first_image.shape
 
     # Define the codec and create VideoWriter object
@@ -32,13 +25,12 @@ def generate_video_from_images(image_folder, video_name='output_video.avi', fps=
     video = cv2.VideoWriter(video_name, fourcc, fps, (width, height))
 
     # Write each image to the video
-    for image in images:
-        img_path = os.path.join(image_folder, image)
-        img = cv2.imread(img_path)
+    for image_data in image_folder:
+        img = cv2.imdecode(np.frombuffer(image_data, np.uint8), cv2.IMREAD_COLOR)
 
         # Check if the image was loaded successfully
         if img is None:
-            print(f"Could not load image {img_path}, skipping.")
+            print("Could not load image, skipping.")
             continue
 
         # Resize the image if needed (optional)
@@ -50,6 +42,40 @@ def generate_video_from_images(image_folder, video_name='output_video.avi', fps=
     # Release the video writer
     video.release()
     print(f"Video saved as {video_name}")
+    # # Get list of image files
+    # images = [img for img in sorted(os.listdir(image_folder)) if img.endswith(".jpg") or img.endswith(".png") or img.endswith(".jpeg")]
+
+    # # Check if there are any images
+    # if not images:
+    #     raise ValueError("No images found in the folder. Make sure the folder contains .jpg or .png files.")
+
+    # # Load the first image to get dimensions
+    # first_image = cv2.imread(os.path.join(image_folder, images[0]))
+    # height, width, _ = first_image.shape
+
+    # # Define the codec and create VideoWriter object
+    # fourcc = cv2.VideoWriter_fourcc(*'H264')  # Codec for .mp4 format
+    # video = cv2.VideoWriter(video_name, fourcc, fps, (width, height))
+
+    # # Write each image to the video
+    # for image in images:
+    #     img_path = os.path.join(image_folder, image)
+    #     img = cv2.imread(img_path)
+
+    #     # Check if the image was loaded successfully
+    #     if img is None:
+    #         print(f"Could not load image {img_path}, skipping.")
+    #         continue
+
+    #     # Resize the image if needed (optional)
+    #     img = cv2.resize(img, (width, height))
+
+    #     # Write the image to the video
+    #     video.write(img)
+
+    # # Release the video writer
+    # video.release()
+    # print(f"Video saved as {video_name}")
 
 
 

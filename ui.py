@@ -23,7 +23,8 @@ if text_input:
     st.write(f"Script: {text_input}")
 
 if st.button("Generate video"):
-    generate_video_from_images(image_folder='/Users/pranavnarahari/Documents/hinge-ai/sample-images')
+    image_files = [image_file.read() for image_file in image_files]
+    generate_video_from_images(image_files)
     add_audio_to_video('output_video.mp4', '/Users/pranavnarahari/Documents/hinge-ai/sample-audio.mp3', 'output_video_with_audio.mp4')
     video_bytes = open("output_video_with_audio.mp4", "rb").read()
     st.video(video_bytes)
