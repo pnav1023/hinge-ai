@@ -44,6 +44,7 @@ def generate_video_from_images(image_folder, video_name="output_video.mp4", fps=
     # Release the video writer
     video.release()
     # After video creation
+    video_path = os.path.abspath(video_name)
     for _ in range(10):  # Retry up to 10 times with a short wait
         if os.path.exists(video_path):
             print("Video file found.")
@@ -51,7 +52,6 @@ def generate_video_from_images(image_folder, video_name="output_video.mp4", fps=
         else:
             print("Video file not found, waiting...")
             sleep(1)
-    video_path = os.path.abspath(video_name)
     print(f"Video saved at {video_path}")
     print(f"Video saved as {video_name}")
 
