@@ -50,6 +50,8 @@ def generate_video_from_images(image_folder, video_name="output_video.mp4", fps=
 
     # Release the video writer
     video.release()
+    video_path = os.path.abspath(video_name)
+    print(f"Video saved at {video_path}")
     print(f"Video saved as {video_name}")
 
 if __name__ == "__main__":
