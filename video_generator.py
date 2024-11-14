@@ -8,14 +8,7 @@ from time import sleep
 
 def add_audio_to_video(video_path, audio_path, output_path):
     print("add_audio_to_video:", os.getcwd())
-    # After video creation
-    for _ in range(10):  # Retry up to 10 times with a short wait
-        if os.path.exists(video_path):
-            print("Video file found.")
-            break
-        else:
-            print("Video file not found, waiting...")
-            sleep(1)
+    
 
     video = mp.VideoFileClip(video_path)
     audio = mp.AudioFileClip(audio_path)
@@ -50,6 +43,14 @@ def generate_video_from_images(image_folder, video_name="output_video.mp4", fps=
 
     # Release the video writer
     video.release()
+    # After video creation
+    for _ in range(10):  # Retry up to 10 times with a short wait
+        if os.path.exists(video_path):
+            print("Video file found.")
+            break
+        else:
+            print("Video file not found, waiting...")
+            sleep(1)
     video_path = os.path.abspath(video_name)
     print(f"Video saved at {video_path}")
     print(f"Video saved as {video_name}")
