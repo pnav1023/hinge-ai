@@ -22,7 +22,7 @@ if text_input:
 if st.button("Generate video"):
     image_files = [image_file.read() for image_file in image_files]
     generate_video_from_images(image_files)
-    # add_audio_to_video("output_video.mp4", "sample_audio.mp3","output_video_with_audio.mp4")
+    add_audio_to_video("output_video.mp4", "sample_audio.mp3","output_video_with_audio.mp4")
     video_bytes = open("output_video.mp4", "rb").read()
     st.video(video_bytes)
     st.download_button(
